@@ -31,8 +31,6 @@ public class LoginController {
     @GetMapping(value = "api/v1/csrf-token")
     public @ResponseBody
     CsrfToken getCsrfToken(HttpServletRequest request) {
-        CsrfToken token = (CsrfToken) request.getAttribute("_csrf");
-        System.out.println(token.getHeaderName() + " " + token.getParameterName() + " " + token.getToken());
-        return token;
+        return (CsrfToken) request.getAttribute("_csrf");
     }
 }

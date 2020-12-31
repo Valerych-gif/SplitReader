@@ -3,15 +3,13 @@ package ru.valerych.splitreader.dto;
 public class UserLoginDTO {
     private String email;
     private String password;
-    private String _csrf;
 
     public UserLoginDTO() {
     }
 
-    public UserLoginDTO(String email, String password, String csrf) {
+    public UserLoginDTO(String email, String password) {
         this.email = email;
         this.password = password;
-        this._csrf = csrf;
     }
 
     public String getEmail() {
@@ -28,13 +26,5 @@ public class UserLoginDTO {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getCsrf() {
-        return _csrf;
-    }
-
-    public void setCsrf(String csrf) {
-        this._csrf = csrf;
     }
 }
