@@ -9,6 +9,6 @@ public class IsAliveController {
 
     @RequestMapping
     public String isAlive(){
-        return "I am alive!";
+        return "I am alive";
     }
 }
