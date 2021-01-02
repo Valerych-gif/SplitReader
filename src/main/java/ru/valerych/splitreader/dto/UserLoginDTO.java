@@ -1,23 +1,23 @@
 package ru.valerych.splitreader.dto;
 
 public class UserLoginDTO {
-    private String email;
+    private String username;
     private String password;
 
     public UserLoginDTO() {
     }
 
-    public UserLoginDTO(String email, String password) {
-        this.email = email;
+    public UserLoginDTO(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

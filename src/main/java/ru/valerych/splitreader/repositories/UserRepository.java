@@ -1,6 +1,7 @@
 package ru.valerych.splitreader.repositories;
 
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import ru.valerych.splitreader.entities.Role;
 import ru.valerych.splitreader.entities.User;
@@ -18,13 +19,13 @@ public class UserRepository {
         users = new ArrayList<>();
         users.add(new User(
                 "user@mail.com",
-                "1234",
+                "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
                 Arrays.asList(new Role("USER"))
                 ));
 
         users.add(new User(
                 "admin@mail.com",
-                "1234",
+                "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
                 Arrays.asList(new Role("ADMIN"))
                 ));
     }
@@ -39,9 +40,9 @@ public class UserRepository {
 
     public User findUserByUserNameAndPassword(String email, String password) {
         User user = findUserByUserName(email);
-        if (user.getPassword().equals(password)){
+        if (user!=null&&user.getPassword().equals(password)){
             return user;
         }
-        return null;
+        throw new RuntimeException("User " + email + " not found");
     }
 }

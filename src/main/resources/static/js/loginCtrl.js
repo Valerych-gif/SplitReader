@@ -4,29 +4,32 @@ splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
         password: ""
     };
 
-    var csrf = "";
+    $scope.csrf = null;
 
     $http.get("api/v1/csrf-token")
         .then(function successCallback(response) {
-            csrf = response.data.token;
-            alert(csrf);
+            $scope.csrf = response.data;
+            alert($scope.csrf.token);
         });
 
     $scope.loginSubmit = function (userAuthData, loginForm) {
         var data = {
-            "email": userAuthData.email,
-            "password": userAuthData.password
+            "username": userAuthData.email,
+            "password": userAuthData.password,
+            "_csrf": $scope.csrf.token
         };
-        console.log(data);
+
         if (loginForm.$valid) {
-            $http(
+            var res = $http.post("login", "",
                 {
-                    method: 'POST',
-                    url: "api/v1/login",
-                    headers: {
-                        "X-CSRF-TOKEN": csrf
-                    },
-                    data: JSON.stringify(data)
+                    method: "POST",
+                    url: "login",
+                    params:
+                    {
+                        "username": userAuthData.email,
+                        "password": userAuthData.password,
+                        "_csrf": $scope.csrf.token
+                    }
                 });
         }
     }
