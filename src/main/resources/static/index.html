@@ -29,19 +29,33 @@
             </ul>
         </div>
     </nav>
-    <h1 class="mx-auto mt-5 text-center">Welcome to SplitReader main page</h1>
-    <div class="mx-auto mt-5 login-form" ng-controller="LoginCtrl">
-        <form name="loginForm">
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="emailHelp" ng-model="userAuthData.email" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password"  ng-model="userAuthData.password" required>
-            </div>
-            <button type="submit" class="btn btn-primary" ng-click="loginSubmit(userAuthData, loginForm)">Log in</button>
-        </form>
+</div>
+<div class="container mx-auto mt-5 ">
+    <div class="row">
+        <div class="main_body col-9">
+            <h1 class="mx-auto mt-5 text-center">Welcome to SplitReader main page</h1>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam tenetur, labore eos officiis id soluta dolorem iste. Recusandae officia harum, unde nulla laborum ab necessitatibus consequatur. Quibusdam architecto modi mollitia?</p>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam tenetur, labore eos officiis id soluta dolorem iste. Recusandae officia harum, unde nulla laborum ab necessitatibus consequatur. Quibusdam architecto modi mollitia?</p>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Neque recusandae nam incidunt odio, qui aspernatur voluptatem assumenda quibusdam at, accusantium minima rem enim facere earum dolorum delectus eligendi veritatis tenetur.
+            Corrupti, in dolor ipsa aperiam soluta nam ipsam tempora dolorum itaque sed, vero blanditiis maiores, doloremque necessitatibus perspiciatis voluptates eum omnis! Rem placeat tempora aspernatur doloribus esse excepturi doloremque cupiditate!
+            Reiciendis, in. Voluptatem nostrum laboriosam quo perferendis vitae dolor eligendi doloribus atque rerum accusantium nemo quod, ea corporis sequi quam non! Perspiciatis alias pariatur asperiores animi doloribus maiores, sequi repudiandae!
+            Quo et harum hic accusantium rem dicta veniam quos sapiente illum! Nobis omnis placeat dolores odit quo, vitae provident, rem aut sit molestias quisquam atque commodi sapiente. Praesentium, nesciunt ut.
+            </p>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Totam tenetur, labore eos officiis id soluta dolorem iste. Recusandae officia harum, unde nulla laborum ab necessitatibus consequatur. Quibusdam architecto modi mollitia?</p>
+        </div>
+        <div class="login-form col-3" ng-controller="LoginCtrl">
+            <form name="loginForm">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" ng-model="userAuthData.email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password"  ng-model="userAuthData.password" required>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-click="loginSubmit(userAuthData, loginForm)">Log in</button>
+            </form>
+        </div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

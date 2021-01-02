@@ -1,3 +1,7 @@
-.login-form{
-    width: 600px;
+.login-form {
+    max-width: 300px;
 }
+
+.main_body {}
+
+.login-form {}
