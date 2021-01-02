@@ -9,7 +9,6 @@ splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
     $http.get("api/v1/csrf-token")
         .then(function successCallback(response) {
             $scope.csrf = response.data;
-            alert($scope.csrf.token);
         });
 
     $scope.loginSubmit = function (userAuthData, loginForm) {
