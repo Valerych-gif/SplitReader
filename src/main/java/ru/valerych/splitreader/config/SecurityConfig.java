@@ -23,9 +23,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/**").authenticated()
-                .antMatchers("/login/").permitAll()
+                .antMatchers("/login.html/").permitAll()
                 .and()
-                .formLogin();
+                .formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/authuser");
+//        http.csrf().disable();
     }
 
     @Override

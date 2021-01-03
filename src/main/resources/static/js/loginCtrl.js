@@ -19,7 +19,7 @@ splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
         };
 
         if (loginForm.$valid) {
-            var res = $http.post("login", "",
+            var res = $http.post("authuser", "",
                 {
                     method: "POST",
                     url: "login",
