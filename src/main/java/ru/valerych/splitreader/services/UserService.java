@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(
+        UserDetails userDetails = new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
                 true,
@@ -39,6 +39,8 @@ public class UserService implements UserDetailsService {
                 true,
                 true,
                 mapRolesToAuthorities(user.getRoles()));
+        session.setAttribute("userDetails", userDetails);
+        return userDetails;
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {

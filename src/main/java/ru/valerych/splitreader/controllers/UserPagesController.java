@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class UserPagesController {
-    @GetMapping(value = "api/v1/user")
-    public @ResponseBody
-    CsrfToken getCsrfToken(HttpServletRequest request) {
-        return (CsrfToken) request.getAttribute("_csrf");
-    }
+//    @GetMapping(value = "api/v1/user")
+//    public @ResponseBody
+//    CsrfToken getCsrfToken(HttpServletRequest request) {
+//        return (CsrfToken) request.getAttribute("_csrf");
+//    }
 }

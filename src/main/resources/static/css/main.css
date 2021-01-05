@@ -40,6 +40,16 @@ body {
     margin: 20px auto;
 }
 
+.invisible {
+    display: none;
+    visibility: hidden;
+}
+
+.visible {
+    display: block;
+    visibility: visible;
+}
+
 @media(max-width: 997px) {
     .navigation {
         margin-bottom: 20px;
