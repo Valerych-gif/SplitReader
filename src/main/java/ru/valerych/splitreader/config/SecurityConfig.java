@@ -24,7 +24,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/api/v1/user/").authenticated()
                 .antMatchers("/login.html/").permitAll()
-                .antMatchers("/addadmin/").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
