@@ -1,34 +1,43 @@
 package ru.valerych.splitreader.entities;
 
-import org.springframework.security.core.GrantedAuthority;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Collection;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
+@Entity(name = "users")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class User{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String username;
     private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
+    private boolean enabled;
+    private boolean accountNonExpired;
+    private boolean credentialsNonExpired;
+    private boolean accountNonLocked;
 
-    public User(String username, String password, List<Role> roles) {
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
+    private String city;
+//    private List<Genre> preferredGenres;
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public List<Role> getRoles(){
-        return roles;
-    }
+    private Date lastVisit;
+    private Long currentBookId;
+//    private List<Book> books;
 }

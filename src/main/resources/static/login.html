@@ -37,17 +37,26 @@
             <p>Вы пытаетесь попасть на страницу, доступ к которой есть только у зарегистрированных пользователей. Для того, чтобы посетить эту страницу, пожалуйста, авторизуйтесь. Если у вас еще нет учетной записи на сайте, то пройдите, пожалуйста регистрацию</p>
         </div>
         <div class="login-form" ng-controller="LoginCtrl">
-            <form name="loginForm">
-                <div class="form-group">
-                    <label for="email">Электронная почта</label>
-                    <input type="email" class="form-control login-form_input" id="email" aria-describedby="emailHelp" ng-model="userAuthData.email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Пароль</label>
-                    <input type="password" class="form-control login-form_input" id="password"  ng-model="userAuthData.password" required>
-                </div>
-                <button type="submit" class="btn btn-primary" ng-click="loginSubmit(userAuthData, loginForm)">Войти</button>
-            </form>
+            <div id="form_login_block">
+                <form name="loginForm">
+                    <div class="form-group">
+                        <label for="email">Электронная почта</label>
+                        <input type="email" class="form-control login-form_input" id="email" aria-describedby="emailHelp" ng-model="userAuthData.email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" class="form-control login-form_input" id="password"  ng-model="userAuthData.password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-click="loginSubmit(userAuthData, loginForm)">Войти</button>
+                </form>
+            </div>
+            <div id="user_details_block" class="invisible">
+                    <div>
+                        <p>Электронная почта</p>
+                        <p>{{userDetails.email}}</p>
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-click="logoutSubmit()">Выйти</button>
+            </div>
         </div>
     </div>
 </div>

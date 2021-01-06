@@ -15,13 +15,17 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
+import ru.valerych.splitreader.entities.Book;
+import ru.valerych.splitreader.entities.Genre;
 import ru.valerych.splitreader.entities.Role;
 import ru.valerych.splitreader.entities.User;
 import ru.valerych.splitreader.repositories.UserRepository;
 import ru.valerych.splitreader.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Map;
 
 import static org.hamcrest.Matchers.containsString;
@@ -43,18 +47,46 @@ class ControllersTest {
 
     public ControllersTest() {
         MockitoAnnotations.openMocks(this);
-        when(userRepository.findUserByUserName("user@mail.com"))
-                .thenReturn(new User(
-                        "user@mail.com",
-                        "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
-                        Collections.singletonList(new Role("USER"))
-                ));
-        when(userRepository.findUserByUserName("admin@mail.com"))
-                .thenReturn(new User(
-                        "admin@mail.com",
-                        "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
-                        Collections.singletonList(new Role("ADMIN"))
-                ));
+        when(userRepository.findUserByUsername("user@mail.com"))
+                .thenReturn(
+                        new User(
+                                1L,
+                                "user@mail.com",
+                                "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
+                                Collections.singletonList(new Role(0L, "USER")),
+                                true,
+                                true,
+                                true,
+                                true,
+                                "Ivan",
+                                "Ivanov",
+                                null,
+                                "Moscow",
+//                                new ArrayList<>(),
+                                new Date(),
+                                1L
+//                                new ArrayList<>()
+                        ));
+        when(userRepository.findUserByUsername("admin@mail.com"))
+                .thenReturn(
+                        new User(
+                                2L,
+                                "admin@mail.com",
+                                "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
+                                Collections.singletonList(new Role(1L, "ADMIN")),
+                                true,
+                                true,
+                                true,
+                                true,
+                                "Петр",
+                                "Петров",
+                                null,
+                                "Санкт-Петербург",
+//                                new ArrayList<>(),
+                                new Date(),
+                                1L
+//                                new ArrayList<>()
+                        ));
     }
 
     private String getCsrf() throws Exception {
@@ -64,7 +96,7 @@ class ControllersTest {
         String csrfString = mvcResult.getResponse().getContentAsString();
         JsonParser jsonParser = new JacksonJsonParser();
         Map<String, Object> csrfMap = jsonParser.parseMap(csrfString);
-        return  (String) csrfMap.get("token");
+        return (String) csrfMap.get("token");
     }
 
     @Test

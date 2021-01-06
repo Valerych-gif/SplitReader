@@ -1,10 +1,6 @@
 splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
-    $scope.userAuthData = {
-        email: "",
-        password: "",
-        csrf: ""
-    };
 
+    clearUserAuthData();
     $scope.userDetails = {
         email: ""
     };
@@ -33,12 +29,23 @@ splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
                     function (response) {
                         console.log(response.status);
                         showUserDetails();
+                        clearUserAuthData();
                     },
                     function (response) {
                         console.log("fail");
+                        clearUserAuthData();
                     }
                 );
         }
+    }
+
+    $scope.logoutSubmit = function () {
+        $http.get("logout")
+            .then(function successCallback(response) {
+                console.log(response);
+                hideUserDetailsBlock();
+                showLoginFormBlock();
+            });
     }
 
     function hideLoginFormBlock() {
@@ -78,5 +85,13 @@ splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
                 function (response) {
                     console.log(response);
                 });
+    }
+
+    function clearUserAuthData() {
+        $scope.userAuthData = {
+            email: "",
+            password: "",
+            csrf: ""
+        };
     }
 });

@@ -22,17 +22,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/api/v1/user/**").authenticated()
+                .antMatchers("/api/v1/user/").authenticated()
                 .antMatchers("/login.html/").permitAll()
+                .antMatchers("/addadmin/").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
-                .loginProcessingUrl("/authuser");
-//        http.csrf().disable();
+                .loginProcessingUrl("/authuser")
+                .and()
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/");
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authenticationProvider());
     }
 
