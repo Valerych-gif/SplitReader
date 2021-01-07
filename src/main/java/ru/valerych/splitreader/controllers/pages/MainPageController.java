@@ -1,4 +1,4 @@
-package ru.valerych.splitreader.controllers;
+package ru.valerych.splitreader.controllers.pages;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

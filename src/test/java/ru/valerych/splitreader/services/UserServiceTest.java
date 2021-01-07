@@ -6,17 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import ru.valerych.splitreader.entities.Book;
-import ru.valerych.splitreader.entities.Genre;
 import ru.valerych.splitreader.entities.Role;
 import ru.valerych.splitreader.entities.User;
 import ru.valerych.splitreader.repositories.UserRepository;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 
@@ -35,7 +30,7 @@ class UserServiceTest {
         when(userRepository.findUserByUsername("user@mail.com"))
                 .thenReturn(
                         new User(
-                                -1L,
+                                1L,
                                 "user@mail.com",
                                 "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
                                 Collections.singletonList(new Role(0L, "USER")),

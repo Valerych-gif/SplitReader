@@ -1,42 +1,42 @@
 splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
 
     clearUserAuthData();
-    $scope.userDetails = {
-        email: ""
-    };
-
-    $http.get("api/v1/csrf-token")
-        .then(function successCallback(response) {
-            console.log(response);
-            csrf = response.data.token;
-        });
+    // $scope.userDetails = {
+    //     email: ""
+    // };
 
     showUserDetails();
 
     $scope.loginSubmit = function (userAuthData, loginForm) {
 
-        if (loginForm.$valid) {
-            var res = $http.post("authuser", "",
-                {
-                    params:
-                    {
-                        "username": userAuthData.email,
-                        "password": userAuthData.password,
-                        "_csrf": csrf
-                    }
-                })
-                .then(
-                    function (response) {
-                        console.log(response.status);
-                        showUserDetails();
-                        clearUserAuthData();
-                    },
-                    function (response) {
-                        console.log("fail");
-                        clearUserAuthData();
-                    }
-                );
-        }
+        $http.get("api/v1/csrf-token")
+            .then(function successCallback(response) {
+                console.log(response);
+                csrf = response.data.token;
+
+                if (loginForm.$valid) {
+                    var res = $http.post("authuser", "",
+                        {
+                            params:
+                            {
+                                "username": userAuthData.email,
+                                "password": userAuthData.password,
+                                "_csrf": csrf
+                            }
+                        })
+                        .then(
+                            function (response) {
+                                console.log(response.status);
+                                showUserDetails();
+                                clearUserAuthData();
+                            },
+                            function (response) {
+                                console.log("fail");
+                                clearUserAuthData();
+                            }
+                        );
+                }
+            });
     }
 
     $scope.logoutSubmit = function () {
@@ -68,6 +68,14 @@ splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
         element.classList.remove("invisible");
     }
 
+    function getCsrf() {
+        $http.get("api/v1/csrf-token")
+            .then(function successCallback(response) {
+                console.log(response);
+                csrf = response.data.token;
+            });
+    }
+
     function showUserDetails() {
 
         $http.get("api/v1/user")
@@ -76,7 +84,9 @@ splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
                     console.log(response);
                     if (response.data.username != null) {
                         $scope.userDetails = {
-                            email: response.data.username
+                            email: response.data.username,
+                            firstName: response.data.firstName,
+                            lastName: response.data.lastName
                         };
                         hideLoginFormBlock();
                         showUserDetailsBlock();

@@ -57,13 +57,27 @@
                     <button type="submit" class="btn btn-primary" ng-click="loginSubmit(userAuthData, loginForm)">Войти</button>
                 </form>
             </div>
-            <div id="user_details_block" class="invisible">
+            <div id="user_details_block" class="invisible user-details">
+                <div class="user-details__data">
+                    <div class="mr-5">
+                        <h5>Имя</h5>
+                        <p>{{userDetails.firstName}}</p>
+                    </div>
+                    <div class="mr-5">
+                        <h5>Фамилия</h5>
+                        <p>{{userDetails.lastName}}</p>
+                    </div>
                     <div>
-                        <p>Электронная почта</p>
+                        <h5>Электронная почта</h5>
                         <p>{{userDetails.email}}</p>
                     </div>
-                    <button type="submit" class="btn btn-primary" ng-click="logoutSubmit()">Выйти</button>
-            </div>
+                </div>
+                <div class="user-details__links">
+                    <a href="profile">Профиль</a>
+                    <a href="library" class="ml-3">Библиотека</a>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3" ng-click="logoutSubmit()">Выйти</button>
+        </div>
         </div>
     </div>
 </div>

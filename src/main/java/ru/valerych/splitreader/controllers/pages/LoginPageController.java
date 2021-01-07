@@ -1,4 +1,4 @@
-package ru.valerych.splitreader.controllers;
+package ru.valerych.splitreader.controllers.pages;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Controller
-public class LoginController {
+public class LoginPageController {
 
     @GetMapping("/login")
     public String login() {

@@ -1,5 +1,6 @@
 package ru.valerych.splitreader.controllers;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,9 @@ import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.util.LinkedMultiValueMap;
@@ -23,6 +27,7 @@ import ru.valerych.splitreader.repositories.UserRepository;
 import ru.valerych.splitreader.services.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -41,6 +46,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ControllersTest {
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    HttpSession session;
 
     @Mock
     private UserRepository userRepository;
@@ -127,7 +135,6 @@ class ControllersTest {
     @Disabled
     public void userAuthorizationTest() throws Exception {
         String csrfToken = getCsrf();
-        System.out.println(csrfToken);
         LinkedMultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         requestParams.add("username", "user@mail.com");
         requestParams.add("password", "1234");
@@ -139,9 +146,5 @@ class ControllersTest {
                         .params(requestParams)
                 )
                 .andDo(print());
-
-        mockMvc
-                .perform(post("/v1/user"))
-                .andExpect(status().isOk());
     }
 }
