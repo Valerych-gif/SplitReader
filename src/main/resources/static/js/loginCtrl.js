@@ -1,10 +1,6 @@
 splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
 
     clearUserAuthData();
-    // $scope.userDetails = {
-    //     email: ""
-    // };
-
     showUserDetails();
 
     $scope.loginSubmit = function (userAuthData, loginForm) {
@@ -83,11 +79,7 @@ splitReaderApp.controller("LoginCtrl", function ($scope, $http) {
                 function (response) {
                     console.log(response);
                     if (response.data.username != null) {
-                        $scope.userDetails = {
-                            email: response.data.username,
-                            firstName: response.data.firstName,
-                            lastName: response.data.lastName
-                        };
+                        $scope.userDetails = response.data;
                         hideLoginFormBlock();
                         showUserDetailsBlock();
                     }
