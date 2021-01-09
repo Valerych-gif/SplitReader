@@ -1,0 +1,15 @@
+.reg-form_input {
+    width: 400px;
+}
+
+@media(max-width: 997px) {
+    .reg-form_input {
+        width: 300px;
+    }
+}
+
+@media(max-width: 667px) {
+    .reg-form_input {
+        width: 100%;
+    }
+}

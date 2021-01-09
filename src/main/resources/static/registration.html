@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/reg.css">
 
     <title>SplitReader. Профиль.</title>
 </head>
@@ -31,28 +32,32 @@
     </nav>
 </div>
 <div class="container">
-    <div class="profile__user-data login-form" ng-controller="ProfileCtrl">
-        <div class="profile_content mx-auto">
-            <h1>Профиль</h1>
-            <div id="user_details_block">
-                <div>
-                    <h5>Имя</h5>
-                    <p>{{userDetails.firstName}}</p>
-                </div>
-                <div>
-                    <h5>Фамилия</h5>
-                    <p>{{userDetails.lastName}}</p>
-                </div>
-                <div>
-                    <h5>Электронная почта</h5>
-                    <p>{{userDetails.username}}</p>
-                </div>
-                <button type="submit" class="btn btn-primary mt-3" ng-click="logoutSubmit()">Выйти</button>
+    <div class="profile__user-data reg-form" ng-controller="RegCtrl">
+        <div class="mx-auto">
+            <h1>Регистрация</h1>
+            <div id="form_reg_block">
+                <form name="regForm">
+                    <div class="form-group">
+                        <label for="email">Электронная почта</label>
+                        <input type="email" class="form-control reg-form_input" id="email" aria-describedby="emailHelp" ng-model="userAuthData.email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Пароль</label>
+                        <input type="password" class="form-control reg-form_input" id="password"  ng-model="userAuthData.password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Подтверждение пароля</label>
+                        <input type="password" class="form-control reg-form_input" id="confirmPassword"  ng-model="userAuthData.confirmPassword" required>
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="acceptRules" ng-model="userAuthData.acceptRules">
+                        <label class="form-check-label" for="acceptRules">Я принимаю условия <a href="#">пользовательского соглашения</a></label>
+                    </div>
+                    <button type="submit" class="btn btn-primary" ng-click="regSubmit(userAuthData, regForm)">Зарегистрироваться</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-<div class="container library mt-5">
-        <h1>Библиотека</h1>
 </div>
 <div class="fixed-bottom footer container">
     <p class="copyrights">&copy;&nbsp;Все права защищены</p>
@@ -61,6 +66,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 <script src="js/main.js"></script>
-<script src="js/profileCtrl.js"></script>
+<script src="js/regCtrl.js"></script>
 </body>
 </html>

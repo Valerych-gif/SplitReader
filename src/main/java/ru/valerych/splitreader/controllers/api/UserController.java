@@ -36,28 +36,4 @@ public class UserController {
         userDTO.setCurrentBookId(user.getCurrentBookId());
         return userDTO;
     }
-
-    @PostMapping(consumes = "application/json")
-    public void setUserDetails(@RequestBody UserDTO userDTO){
-        System.out.println(userDTO);
-        User user = new User(
-                -1L,
-                userDTO.getUsername(),
-                userDTO.getPassword(),
-                Collections.singletonList(new Role(2L, "USER")),
-                true,
-                true,
-                true,
-                true,
-                userDTO.getFirstName(),
-                userDTO.getLastName(),
-                userDTO.getBirthDate(),
-                userDTO.getCity(),
-//                                new ArrayList<Genre>(),
-                new Date(),
-                -1L
-//                                new ArrayList<Book>()
-        );
-        userService.createUser(user);
-    }
 }

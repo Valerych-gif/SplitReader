@@ -56,25 +56,30 @@
                     </div>
                     <button type="submit" class="btn btn-primary" ng-click="loginSubmit(userAuthData, loginForm)">Войти</button>
                 </form>
+                <hr>
+                <div>
+                    <h6 class="text-secondary">Нет аккаунта? Зарегистируйтесь.</h6>
+                    <a href="registration.html" class="text-primary">Регистрация</a>
+                </div>
             </div>
             <div id="user_details_block" class="invisible user-details">
                 <div class="user-details__data">
                     <div class="mr-5">
-                        <h5>Имя</h5>
-                        <p>{{userDetails.firstName}}</p>
+                        <h5 class="text-secondary">Имя</h5>
+                        <p class="text-secondary">{{userDetails.firstName}}</p>
                     </div>
                     <div class="mr-5">
-                        <h5>Фамилия</h5>
-                        <p>{{userDetails.lastName}}</p>
+                        <h5 class="text-secondary">Фамилия</h5>
+                        <p class="text-secondary">{{userDetails.lastName}}</p>
                     </div>
                     <div>
-                        <h5>Электронная почта</h5>
-                        <p>{{userDetails.username}}</p>
+                        <h5 class="text-secondary">Электронная почта</h5>
+                        <p class="text-secondary">{{userDetails.username}}</p>
                     </div>
                 </div>
                 <div class="user-details__links">
-                    <a href="profile">Профиль</a>
-                    <a href="library" class="ml-3">Библиотека</a>
+                    <a href="profile.html" class="text-primary">Профиль</a>
+                    <a href="library" class="ml-3 text-primary">Библиотека</a>
                 </div>
                 <button type="submit" class="btn btn-primary mt-3" ng-click="logoutSubmit()">Выйти</button>
         </div>

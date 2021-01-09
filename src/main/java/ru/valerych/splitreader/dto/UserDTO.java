@@ -1,6 +1,5 @@
 package ru.valerych.splitreader.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.valerych.splitreader.entities.Role;
@@ -9,7 +8,6 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO{
 
