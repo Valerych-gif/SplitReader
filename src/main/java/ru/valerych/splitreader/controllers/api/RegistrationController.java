@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.valerych.splitreader.dto.RegUserDTO;
+import ru.valerych.splitreader.dto.UserDTO;
 import ru.valerych.splitreader.responses.RegResponse;
 import ru.valerych.splitreader.services.RoleService;
 import ru.valerych.splitreader.services.UserService;
@@ -23,26 +23,26 @@ public class RegistrationController {
 
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<RegResponse> setUserDetails(@RequestBody RegUserDTO regUserDTO) {
+    public ResponseEntity<RegResponse> setUserDetails(@RequestBody UserDTO userDTO) {
 
-        if (regUserDTO.getUsername()==null||regUserDTO.getPassword()==null){
+        if (userDTO.getUsername()==null||userDTO.getPassword()==null){
             System.out.println("Username or password is empty");
             return ResponseEntity.badRequest().build();
         }
-        if (userService.getUserByUsername(regUserDTO.getUsername())!=null){
+        if (userService.getUserByUsername(userDTO.getUsername())!=null){
             System.out.println("Username is busy");
             return ResponseEntity.badRequest().build();
         }
-        if (!regUserDTO.getPassword().equals(regUserDTO.getConfirmPassword())){
+        if (!userDTO.getPassword().equals(userDTO.getConfirmPassword())){
             System.out.println("Passwords are not equality");
             return ResponseEntity.badRequest().build();
         }
-        if (!regUserDTO.isAcceptRules()){
+        if (!userDTO.isAcceptRules()){
             System.out.println("You must accept our rules");
             return ResponseEntity.badRequest().build();
         }
 
-        userService.createUser(regUserDTO);
+        userService.createUser(userDTO);
         return ResponseEntity.ok().build();
     }
 }

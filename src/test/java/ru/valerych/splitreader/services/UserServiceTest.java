@@ -14,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.valerych.splitreader.dto.RegUserDTO;
 import ru.valerych.splitreader.dto.UserDTO;
 import ru.valerych.splitreader.entities.Role;
 import ru.valerych.splitreader.entities.User;
@@ -114,14 +113,14 @@ class UserServiceTest {
     }
 
     @Test
-    @DisplayName("User login is success")
+    @DisplayName("Loading user by username is success")
     void loadUserByUsernameSuccessTest() {
         UserDetails user = userService.loadUserByUsername(USER_USERNAME);
         Assertions.assertEquals(USER_PASSWORD_ENCODED, user.getPassword());
     }
 
     @Test
-    @DisplayName("User login is failed")
+    @DisplayName("Loading user by username is failed")
     void loadUserByUsernameFailTest() {
         Assertions.assertThrows(UsernameNotFoundException.class, () -> userService.loadUserByUsername(BAD_USERNAME));
     }
@@ -166,12 +165,12 @@ class UserServiceTest {
         when(userRepository.save(newUser))
                 .thenReturn(user);
 
-        RegUserDTO regUserDTO = new RegUserDTO();
-        regUserDTO.setUsername(USER_USERNAME);
-        regUserDTO.setPassword(USER_PASSWORD_DECODED);
-        regUserDTO.setConfirmPassword(USER_PASSWORD_DECODED);
-        regUserDTO.setAcceptRules(true);
-        User testUser = userService.createUser(regUserDTO);
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUsername(USER_USERNAME);
+        userDTO.setPassword(USER_PASSWORD_DECODED);
+        userDTO.setConfirmPassword(USER_PASSWORD_DECODED);
+        userDTO.setAcceptRules(true);
+        User testUser = userService.createUser(userDTO);
         Assertions.assertEquals(USER_PASSWORD_ENCODED, testUser.getPassword());
     }
 

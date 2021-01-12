@@ -15,6 +15,7 @@ public class UserController {
     @GetMapping(produces = "application/json")
     @ResponseBody
     public UserDTO getUserDetails() {
+        // TODO Update last visit date
         return userService.getAuthUserDTO();
     }
 

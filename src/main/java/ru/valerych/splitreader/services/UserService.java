@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.valerych.splitreader.dto.RegUserDTO;
 import ru.valerych.splitreader.dto.UserDTO;
 import ru.valerych.splitreader.entities.Role;
 import ru.valerych.splitreader.entities.User;
@@ -69,10 +68,10 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User createUser(RegUserDTO regUserDTO) {
+    public User createUser(UserDTO userDTO) {
         User user = new User();
-        user.setUsername(regUserDTO.getUsername());
-        user.setPassword(regUserDTO.getPassword());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         user.setRoles(Collections.singletonList(roleService.getRoleByName("USER")));
         user.setEnabled(false);
         user.setAccountNonExpired(true);
@@ -84,8 +83,7 @@ public class UserService implements UserDetailsService {
         user.setCity("");
         user.setLastVisit(null);
         user.setCurrentBookId(null);
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+
         return userRepository.save(user);
     }
 
@@ -95,6 +93,7 @@ public class UserService implements UserDetailsService {
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(user.getUsername());
         userDTO.setPassword("******");
+        userDTO.setAcceptRules(true);
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
         userDTO.setRoles(user.getRoles());
@@ -109,8 +108,7 @@ public class UserService implements UserDetailsService {
     public void updateAuthUserDTO(UserDTO userDTO) {
         User user = getAuthUser();
         if (user==null) return;
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         user.setCity(userDTO.getCity());
