@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ru.valerych.splitreader.dto.UserDTO;
 import ru.valerych.splitreader.responses.RegResponse;
-import ru.valerych.splitreader.services.RoleService;
-import ru.valerych.splitreader.services.UserService;
+import ru.valerych.splitreader.services.RoleServiceImpl;
+import ru.valerych.splitreader.services.UserServiceImpl;
 
 @Controller
 @RequestMapping("api/v1/registration")
 public class RegistrationController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private RoleService roleService;
+    private RoleServiceImpl roleService;
 
 
     @PostMapping(consumes = "application/json")

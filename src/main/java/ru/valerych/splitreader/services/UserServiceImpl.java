@@ -14,6 +14,7 @@ import ru.valerych.splitreader.dto.UserDTO;
 import ru.valerych.splitreader.entities.Role;
 import ru.valerych.splitreader.entities.User;
 import ru.valerych.splitreader.repositories.UserRepository;
+import ru.valerych.splitreader.services.contracts.UserService;
 
 import javax.transaction.Transactional;
 import java.util.Collection;
@@ -21,13 +22,13 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private RoleService roleService;
+    private RoleServiceImpl roleService;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
@@ -53,7 +54,7 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
-    public User getAuthUser(){
+    public User getCurrentUser(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = null;
         if (auth!=null){
@@ -72,7 +73,7 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setUsername(userDTO.getUsername());
         user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-        user.setRoles(Collections.singletonList(roleService.getRoleByName("USER")));
+        user.setRoles(Collections.singletonList(roleService.getRoleByName("ROLE_USER")));
         user.setEnabled(false);
         user.setAccountNonExpired(true);
         user.setCredentialsNonExpired(true);
@@ -87,8 +88,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public UserDTO getAuthUserDTO() {
-        User user = getAuthUser();
+    @Override
+    public boolean updateUserDTO(UserDTO userDTO) {
+        return false;
+    }
+
+    public UserDTO getCurrentUserDTO() {
+        User user = getCurrentUser();
         if (user==null) return null;
         UserDTO userDTO = new UserDTO();
         userDTO.setUsername(user.getUsername());
@@ -106,7 +112,7 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public void updateAuthUserDTO(UserDTO userDTO) {
-        User user = getAuthUser();
+        User user = getCurrentUser();
         if (user==null) return;
 
         user.setFirstName(userDTO.getFirstName());

@@ -18,12 +18,13 @@ import ru.valerych.splitreader.dto.UserDTO;
 import ru.valerych.splitreader.entities.Role;
 import ru.valerych.splitreader.entities.User;
 import ru.valerych.splitreader.repositories.UserRepository;
+import ru.valerych.splitreader.testUtils.Users;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
 
 import static org.mockito.Mockito.when;
+import static ru.valerych.splitreader.testUtils.Users.*;
+import static ru.valerych.splitreader.config.security.Roles.*;
 
 class UserServiceTest {
 
@@ -31,23 +32,13 @@ class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
-    private RoleService roleService;
+    private RoleServiceImpl roleService;
 
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private UserService userService;
-
-    private final String
-            ADMIN_USERNAME = "admin@mail.com",
-            ADMIN_PASSWORD_ENCODED = "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
-            ADMIN_PASSWORD_DECODED = "1234",
-            USER_USERNAME = "user@mail.com",
-            USER_PASSWORD_ENCODED = "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
-            USER_PASSWORD_DECODED = "1234",
-            BAD_USERNAME = "baduser@mail.com",
-            BAD_PASSWORD = "12345";
+    private UserServiceImpl userService;
 
     private final User user, admin;
 
@@ -60,51 +51,17 @@ class UserServiceTest {
     };
 
     public UserServiceTest() {
-        user = new User(
-                1L,
-                USER_USERNAME,
-                USER_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(0L, "USER")),
-                true,
-                true,
-                true,
-                true,
-                "Ivan",
-                "Ivanov",
-                null,
-                "Moscow",
-//                                new ArrayList<Genre>(),
-                new Date(),
-                1L
-//                                new ArrayList<Book>()
-        );
+        user = getUser();
+        admin = getAdmin();
 
-        admin = new User(
-                2L,
-                ADMIN_USERNAME,
-                ADMIN_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(1L, "ADMIN")),
-                true,
-                true,
-                true,
-                true,
-                "Петр",
-                "Петров",
-                null,
-                "Санкт-Петербург",
-//                                new ArrayList<>(),
-                new Date(),
-                1L
-//                                new ArrayList<>()
-        );
         MockitoAnnotations.openMocks(this);
         when(userRepository.findUserByUsername(USER_USERNAME))
                 .thenReturn(user);
         when(userRepository.findUserByUsername(ADMIN_USERNAME))
                 .thenReturn(admin);
 
-        when(roleService.getRoleByName("USER"))
-                .thenReturn(new Role("USER"));
+        when(roleService.getRoleByName(ROLE_USER.name()))
+                .thenReturn(new Role(ROLE_USER.name()));
 
         when((passwordEncoder.encode(USER_PASSWORD_DECODED)))
                 .thenReturn(USER_PASSWORD_ENCODED);
@@ -143,24 +100,7 @@ class UserServiceTest {
     @DisplayName("User creating test")
     void createUser() {
 
-        User newUser = new User(
-                null,
-                USER_USERNAME,
-                USER_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(null, "USER")),
-                false,
-                true,
-                true,
-                true,
-                "",
-                "",
-                null,
-                "",
-//                                new ArrayList<Genre>(),
-                null,
-                null
-//                                new ArrayList<Book>()
-        );
+        User newUser = Users.getNewUser();
 
         when(userRepository.save(newUser))
                 .thenReturn(user);
@@ -178,7 +118,7 @@ class UserServiceTest {
     @DisplayName("Getting auth user is success")
     void getAuthUserSuccessTest() {
         authenticate(ADMIN_USERNAME, ADMIN_PASSWORD_DECODED);
-        User testUser = userService.getAuthUser();
+        User testUser = userService.getCurrentUser();
 
         Assertions.assertEquals(ADMIN_PASSWORD_ENCODED, testUser.getPassword());
     }
@@ -187,7 +127,7 @@ class UserServiceTest {
     @DisplayName("Getting auth user is fail")
     void getAuthUserFailTest() {
         authenticate(ADMIN_USERNAME, BAD_PASSWORD);
-        User testUser = userService.getAuthUser();
+        User testUser = userService.getCurrentUser();
 
         Assertions.assertNull(testUser);
     }
@@ -197,7 +137,7 @@ class UserServiceTest {
     @DisplayName("Getting auth userDTO is success")
     void getAuthUserDTOSuccessTest() {
         authenticate(USER_USERNAME, USER_PASSWORD_DECODED);
-        UserDTO userDTO = userService.getAuthUserDTO();
+        UserDTO userDTO = userService.getCurrentUserDTO();
 
         Assertions.assertEquals(USER_USERNAME, userDTO.getUsername());
         Assertions.assertEquals("******", userDTO.getPassword());
@@ -207,7 +147,7 @@ class UserServiceTest {
     @DisplayName("Getting auth userDTO is fail")
     void getAuthUserDTOFailTest() {
         authenticate(USER_USERNAME, BAD_PASSWORD);
-        UserDTO userDTO = userService.getAuthUserDTO();
+        UserDTO userDTO = userService.getCurrentUserDTO();
 
         Assertions.assertNull(userDTO);
     }

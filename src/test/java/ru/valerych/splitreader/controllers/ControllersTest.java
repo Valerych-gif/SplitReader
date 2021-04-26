@@ -24,7 +24,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import ru.valerych.splitreader.entities.Role;
 import ru.valerych.splitreader.entities.User;
 import ru.valerych.splitreader.repositories.UserRepository;
-import ru.valerych.splitreader.services.RoleService;
+import ru.valerych.splitreader.services.RoleServiceImpl;
+import ru.valerych.splitreader.testUtils.Users;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,6 +41,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.valerych.splitreader.testUtils.Users.*;
+import static ru.valerych.splitreader.config.security.Roles.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -54,22 +57,12 @@ class ControllersTest {
     private UserRepository userRepository;
 
     @Mock
-    private RoleService roleService;
+    private RoleServiceImpl roleService;
 
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
 
-    private final String
-            ADMIN_USERNAME = "admin@mail.com",
-            ADMIN_PASSWORD_ENCODED = "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
-            ADMIN_PASSWORD_DECODED = "1234",
-            USER_USERNAME = "user@mail.com",
-            USER_PASSWORD_ENCODED = "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
-            USER_PASSWORD_DECODED = "1234",
-            BAD_USERNAME = "baduser@mail.com",
-            BAD_PASSWORD = "12345";
-
-    private final User user, admin;
+        private final User user, admin;
 
     private final AuthenticationManager authManager = authentication -> {
         String username = authentication.getName();
@@ -82,43 +75,9 @@ class ControllersTest {
     public ControllersTest() {
         MockitoAnnotations.openMocks(this);
 
-        user = new User(
-                1L,
-                USER_USERNAME,
-                USER_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(0L, "USER")),
-                true,
-                true,
-                true,
-                true,
-                "Ivan",
-                "Ivanov",
-                null,
-                "Moscow",
-//                                new ArrayList<Genre>(),
-                new Date(),
-                1L
-//                                new ArrayList<Book>()
-        );
+        user = Users.getUser();
 
-        admin = new User(
-                2L,
-                ADMIN_USERNAME,
-                ADMIN_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(1L, "ADMIN")),
-                true,
-                true,
-                true,
-                true,
-                "Петр",
-                "Петров",
-                null,
-                "Санкт-Петербург",
-//                                new ArrayList<>(),
-                new Date(),
-                1L
-//                                new ArrayList<>()
-        );
+        admin = Users.getAdmin();
         MockitoAnnotations.openMocks(this);
         when(userRepository.findUserByUsername(USER_USERNAME))
                 .thenReturn(user);
@@ -186,6 +145,16 @@ class ControllersTest {
                 .andDo(print());
     }
 
+    @Test
+    @DisplayName("User authorization test")
+    public void UserJWTAuthorizationTest() throws Exception {
+        mockMvc
+                .perform(post("/authuser")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(String.format("{ username: \"%s\", password: \"%s\" }", USER_USERNAME, USER_PASSWORD_DECODED))
+                )
+                .andDo(print());
+    }
 
     @Test
     @Disabled

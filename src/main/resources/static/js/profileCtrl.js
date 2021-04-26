@@ -1,4 +1,4 @@
-splitReaderApp.controller("ProfileCtrl", function ($scope, $http) {
+angular.module("SplitReaderApp").controller("ProfileCtrl", function ($scope, $http) {
 
     showUserDetails();
 
